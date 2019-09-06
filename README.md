@@ -1,5 +1,7 @@
 # farmalytics
 
+Urban farming analytics dashboard for AWS Buildon 2019
+
 ## Project setup
 ```
 yarn install
