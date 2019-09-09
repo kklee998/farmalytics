@@ -11,11 +11,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
 }
 
-img {
-  border-radius: 50%;
-  width: 256px;
-  height: 256px;
+body {
+  margin: 0px;
+  min-height: 100vh;
+  overflow: hidden;
 }
 </style>
