@@ -7,6 +7,8 @@ import store from './store';
 import './registerServiceWorker';
 import 'element-ui/lib/theme-chalk/index.css';
 
+require('vue-ionicons/ionicons.css');
+
 Vue.use(ElementUI);
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);

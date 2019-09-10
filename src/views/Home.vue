@@ -95,7 +95,7 @@
                   <i class="el-icon-info"></i>
                   <span v-if="!isSubMenuCollapse">General Information</span>
                 </el-menu-item>
-                <el-menu-item class="farmSubmenuItem" index="2" disabled>
+                <el-menu-item class="farmSubmenuItem" index="2">
                   <i class="el-icon-lightning"></i>
                   <span v-if="!isSubMenuCollapse">Weather</span>
                 </el-menu-item>
@@ -114,7 +114,7 @@
             ></el-button>
             <el-button icon="el-icon-caret-left" circle @click="collapseSubMenu" v-else></el-button>
           </el-aside>
-          <el-main style="padding: 0px;">
+          <el-main style="padding: 0px;" v-if="this.subSelectedMenu === '1'">
             <div
               style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
               :class="ifCollapse"
@@ -165,6 +165,63 @@
                 />
               </div>
             </el-card>
+          </el-main>
+          <el-main style="padding: 0px; overflow: hidden;" v-if="this.subSelectedMenu === '3'">
+            <div
+              style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
+              :class="ifCollapse"
+            >
+              <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga Soil Analysis</h2>
+            </div>
+            <el-row type="flex" justify="center" :gutter="20">
+              <el-col :span="8">
+                <el-card class="box-card" style="margin: 20px;">
+                  <h3>Water Used Today (L)</h3>
+                  <h4>69L</h4>
+                </el-card>
+              </el-col>
+              <el-col :span="8">
+                <el-card class="box-card" style="margin: 20px;">
+                  <h3>Soil Acid Level Today (pH)</h3>
+                  <h4>6.90</h4>
+                </el-card>
+              </el-col>
+              <el-col :span="8">
+                <el-card class="box-card" style="margin: 20px;">
+                  <h3>Fertilizer Used Today (kg)</h3>
+                  <h4>4.20</h4>
+                </el-card>
+              </el-col>
+            </el-row>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Soil Analysis</h2>
+                <apexchart
+                  type="pie"
+                  height="350"
+                  :options="chartOptionSoil"
+                  :series="seriesSoil"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <h2>Soil Gallery</h2>
+              <el-carousel :interval="4000" type="card" height="400px">
+                <el-carousel-item>
+                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing1.gif">
+                </el-carousel-item>
+                <el-carousel-item>
+                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing2.gif">
+                </el-carousel-item>
+                <el-carousel-item>
+                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing3.gif">
+                </el-carousel-item>
+              </el-carousel>
+            </el-card>
+          </el-main>
+          <el-main style="padding: 0px; overflow: hidden;" v-if="this.subSelectedMenu === '2'">
+            <MdConstructIcon w="600px" h="600px" animate="rotate" style="margin: 150px auto;"/>
+            <h1 style="font-size: 30px;">Under Construction</h1>
           </el-main>
         </el-container>
         <div v-else>
@@ -226,6 +283,8 @@
 
 <script>
 // @ is an alias to /src
+import MdConstructIcon from 'vue-ionicons/dist/md-construct.vue';
+
 const AWS = require('aws-sdk');
 const config = require('@/config.json');
 
@@ -242,12 +301,15 @@ const params = {
     'https://sqs.us-east-1.amazonaws.com/312352681771/farmalytics_sqs' /* required */,
   AttributeNames: ['All'],
   MaxNumberOfMessages: '10',
-  VisibilityTimeout: '10',
+  VisibilityTimeout: '3',
   WaitTimeSeconds: '0',
 };
 
 export default {
   name: 'home',
+  components: {
+    MdConstructIcon,
+  },
   data() {
     return {
       isMainMenuCollapse: true,
@@ -821,6 +883,21 @@ export default {
             },
           },
         },
+      },
+      seriesSoil: [70, 20, 5, 3, 1.1, 0.9],
+      chartOptionSoil: {
+        labels: ['Calcium', 'Magnesium', 'Potassium', 'Boron', 'Cobalt', 'Iron'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: 'bottom',
+            },
+          },
+        }],
       },
     };
   },
