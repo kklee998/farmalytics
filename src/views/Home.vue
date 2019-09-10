@@ -16,6 +16,7 @@
         <div style="width: 64px; height: 64px; border-bottom: solid 1px #e6e6e6;" v-else>
           <img src="@/assets/AWS Logo SM.png" style="max-width: 100%; max-height: 100%;" />
         </div>
+        <el-collapse-transition>
         <el-menu
           style="text-align: left; border-right: none;"
           default-active="1-1"
@@ -43,6 +44,7 @@
             </el-menu-item>
           </el-submenu>
         </el-menu>
+        </el-collapse-transition>
         <br/>
         <el-button icon="el-icon-caret-right" circle @click="expandMainMenu"
           v-if="isMainMenuCollapse"
@@ -82,6 +84,7 @@
                 style="max-width: 100%; max-height: 100%; padding: 15px 8px;"
               />
             </div>
+            <el-collapse-transition>
             <el-menu
               style="text-align: left; border-right: none; margin-top: 15px;"
               default-active="1"
@@ -101,6 +104,7 @@
                 <span v-if="!isSubMenuCollapse">Soil Analysis</span>
               </el-menu-item>
             </el-menu>
+            </el-collapse-transition>
             <br/>
             <el-button icon="el-icon-caret-right" circle @click="expandSubMenu"
               v-if="isSubMenuCollapse"
@@ -736,4 +740,17 @@ export default {
 .expandDiv {
   height: 107px !important;
 }
+
+.transition-box {
+    margin-bottom: 10px;
+    width: 200px;
+    height: 100px;
+    border-radius: 4px;
+    background-color: #409EFF;
+    text-align: center;
+    color: #fff;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    margin-right: 20px;
+  }
 </style>
