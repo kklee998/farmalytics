@@ -4,7 +4,10 @@
     <p>COME BACK LATER</p>
     <img src='@/assets/reee.gif'>-->
     <el-container style="height: 100%;">
-      <el-aside style="border-right: solid 1px #e6e6e6; height: 100%;" :width="mainMenuAsideWidth">
+      <el-aside
+        style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
+        :width="mainMenuAsideWidth"
+      >
         <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;"
           v-if="!isMainMenuCollapse"
         >
@@ -51,10 +54,13 @@
         <el-container style="height: 100%;">
           <el-aside
             style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
-            width="280px"
+            :width="subMenuAsideWidth"
             v-if="true"
           >
-            <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;">
+            <div
+              style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;"
+              v-if="!isSubMenuCollapse"
+            >
               <el-row type="flex" justify="center" style="height: 100%;" :gutter="20">
                 <el-col :span="5">
                   <div style="width: 47px; height: 35px; margin: 40px 0px 0px 0px; float: right;">
@@ -70,24 +76,44 @@
                 </el-col>
               </el-row>
             </div>
+            <div style="width: 64px; height: 64px; border-bottom: solid 1px #e6e6e6;" v-else>
+              <img
+                src="@/assets/Vector 2.png"
+                style="max-width: 100%; max-height: 100%; padding: 15px 8px;"
+              />
+            </div>
             <el-menu
               style="text-align: left; border-right: none; margin-top: 15px;"
               default-active="1"
               active-text-color="#0FBA2B"
+              :collapse=isSubMenuCollapse
             >
               <el-menu-item class="farmSubmenuItem" index="1">
-                <i class="el-icon-info"></i>General Information
+                <i class="el-icon-info"></i>
+                <span v-if="!isSubMenuCollapse">General Information</span>
               </el-menu-item>
               <el-menu-item class="farmSubmenuItem" index="2" disabled>
-                <i class="el-icon-lightning"></i>Weather
+                <i class="el-icon-lightning"></i>
+                <span v-if="!isSubMenuCollapse">Weather</span>
               </el-menu-item>
               <el-menu-item class="farmSubmenuItem" index="3" disabled>
-                <i class="el-icon-data-line"></i>Soil Analysis
+                <i class="el-icon-data-line"></i>
+                <span v-if="!isSubMenuCollapse">Soil Analysis</span>
               </el-menu-item>
             </el-menu>
+            <br/>
+            <el-button icon="el-icon-caret-right" circle @click="expandSubMenu"
+              v-if="isSubMenuCollapse"
+            >
+            </el-button>
+            <el-button icon="el-icon-caret-left" circle @click="collapseSubMenu" v-else></el-button>
           </el-aside>
           <el-main style="padding: 0px;">
-            <div style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"></div>
+            <div
+              style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
+              :class="ifCollapse"
+            >
+            </div>
             <el-card class="box-card" style="margin: 20px;">
               <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
                 <h2 style="float: left;">Temperature</h2>
@@ -147,6 +173,7 @@ export default {
   data() {
     return {
       isMainMenuCollapse: true,
+      isSubMenuCollapse: true,
       seriesTemp: [
         {
           name: 'Temperature',
@@ -622,13 +649,31 @@ export default {
     collapseMainMenu() {
       this.isMainMenuCollapse = true;
     },
+    expandSubMenu() {
+      this.isSubMenuCollapse = false;
+    },
+    collapseSubMenu() {
+      this.isSubMenuCollapse = true;
+    },
   },
   computed: {
     mainMenuAsideWidth() {
       if (this.isMainMenuCollapse) {
-        return 60;
+        return '60px';
       }
-      return 300;
+      return '300px';
+    },
+    subMenuAsideWidth() {
+      if (this.isSubMenuCollapse) {
+        return '60px';
+      }
+      return '280px';
+    },
+    ifCollapse() {
+      if (this.isSubMenuCollapse) {
+        return 'collapseDiv';
+      }
+      return 'expandDiv';
     },
   },
 };
@@ -682,5 +727,13 @@ export default {
 
 .el-menu-item {
   height: 30px !important;
+}
+
+.collapseDiv {
+  height: 64px !important;
+}
+
+.expandDiv {
+  height: 107px !important;
 }
 </style>
