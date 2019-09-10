@@ -1,8 +1,5 @@
 <template>
   <div class="home" style="height: 100%;">
-    <!-- <h1>!!UNDER CONSTRUCTION!!</h1>
-    <p>COME BACK LATER</p>
-    <img src='@/assets/reee.gif'>-->
     <el-container style="height: 100%;">
       <el-aside
         style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
@@ -166,7 +163,7 @@
               </div>
             </el-card>
           </el-main>
-          <el-main style="padding: 0px; overflow: hidden;" v-if="this.subSelectedMenu === '3'">
+          <el-main style="padding: 0px; overflow: auto;" v-if="this.subSelectedMenu === '3'">
             <div
               style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
               :class="ifCollapse"
@@ -220,7 +217,12 @@
             </el-card>
           </el-main>
           <el-main style="padding: 0px; overflow: hidden;" v-if="this.subSelectedMenu === '2'">
-            <MdConstructIcon w="600px" h="600px" animate="rotate" style="margin: 150px auto;" />
+            <MdConstructIcon
+              w="500px"
+              h="500px"
+              animate="rotate"
+              style="margin: 150px auto 0px auto;"
+            />
             <h1 style="font-size: 30px;">Under Construction</h1>
           </el-main>
         </el-container>
@@ -293,7 +295,12 @@
             </el-alert>
         </div>
         <div v-else>
-          <MdConstructIcon w="600px" h="600px" animate="rotate" style="margin: 150px auto;" />
+          <MdConstructIcon
+            w="600px"
+            h="600px"
+            animate="rotate"
+            style="margin: 150px auto 0px auto;"
+          />
           <h1 style="font-size: 30px;">Under Construction</h1>
         </div>
       </el-main>
