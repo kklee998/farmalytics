@@ -36,10 +36,10 @@
               <el-menu-item class="farmSubtitle" index="1-2">
                 <i class="el-icon-date"></i>Cycles
               </el-menu-item>
-              <el-menu-item class="farmSubtitle" index="1-3" disabled>
-                <i class="el-icon-warning"></i>Alert
+              <el-menu-item class="farmSubtitle" index="1-3">
+                <i class="el-icon-warning"></i>Suggestions
               </el-menu-item>
-              <el-menu-item class="farmSubtitle" index="1-4" disabled>
+              <el-menu-item class="farmSubtitle" index="1-4">
                 <i class="el-icon-setting"></i>Admins
               </el-menu-item>
             </el-submenu>
@@ -208,73 +208,93 @@
               <h2>Soil Gallery</h2>
               <el-carousel :interval="4000" type="card" height="400px">
                 <el-carousel-item>
-                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing1.gif">
+                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing1.gif" />
                 </el-carousel-item>
                 <el-carousel-item>
-                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing2.gif">
+                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing2.gif" />
                 </el-carousel-item>
                 <el-carousel-item>
-                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing3.gif">
+                  <img style="max-width:100%; max-height:100%;" src="@/assets/dancing3.gif" />
                 </el-carousel-item>
               </el-carousel>
             </el-card>
           </el-main>
           <el-main style="padding: 0px; overflow: hidden;" v-if="this.subSelectedMenu === '2'">
-            <MdConstructIcon w="600px" h="600px" animate="rotate" style="margin: 150px auto;"/>
+            <MdConstructIcon w="600px" h="600px" animate="rotate" style="margin: 150px auto;" />
             <h1 style="font-size: 30px;">Under Construction</h1>
           </el-main>
         </el-container>
-        <div v-else>
+        <div v-else-if="this.selectedMenu === '1-2'">
           <div
-              style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
-              :class="ifCollapse"
-            >
-              <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga Historical Data</h2>
+            style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
+            :class="ifCollapse"
+          >
+            <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga Historical Data</h2>
+          </div>
+          <el-card class="box-card" style="margin: 20px;">
+            <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+              <h2 style="float: left;">Temperature</h2>
+              <apexchart
+                type="area"
+                height="350"
+                :options="chartOptionsTempHis"
+                :series="seriesTempHis"
+              />
             </div>
-            <el-card class="box-card" style="margin: 20px;">
-              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
-                <h2 style="float: left;">Temperature</h2>
-                <apexchart
-                  type="area"
-                  height="350"
-                  :options="chartOptionsTempHis"
-                  :series="seriesTempHis"
-                />
-              </div>
-            </el-card>
-            <el-card class="box-card" style="margin: 20px;">
-              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
-                <h2 style="float: left;">Humidity</h2>
-                <apexchart
-                  type="area"
-                  height="350"
-                  :options="chartOptionsHumidityHis"
-                  :series="seriesHumidityHis"
-                />
-              </div>
-            </el-card>
-            <el-card class="box-card" style="margin: 20px;">
-              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
-                <h2 style="float: left;">Sunlight</h2>
-                <apexchart
-                  type="area"
-                  height="350"
-                  :options="chartOptionsSunlightHis"
-                  :series="seriesSunlightHis"
-                />
-              </div>
-            </el-card>
-            <el-card class="box-card" style="margin: 20px;">
-              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
-                <h2 style="float: left;">Water Level</h2>
-                <apexchart
-                  type="area"
-                  height="350"
-                  :options="chartOptionsWaterHis"
-                  :series="seriesWaterHis"
-                />
-              </div>
-            </el-card>
+          </el-card>
+          <el-card class="box-card" style="margin: 20px;">
+            <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+              <h2 style="float: left;">Humidity</h2>
+              <apexchart
+                type="area"
+                height="350"
+                :options="chartOptionsHumidityHis"
+                :series="seriesHumidityHis"
+              />
+            </div>
+          </el-card>
+          <el-card class="box-card" style="margin: 20px;">
+            <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+              <h2 style="float: left;">Sunlight</h2>
+              <apexchart
+                type="area"
+                height="350"
+                :options="chartOptionsSunlightHis"
+                :series="seriesSunlightHis"
+              />
+            </div>
+          </el-card>
+          <el-card class="box-card" style="margin: 20px;">
+            <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+              <h2 style="float: left;">Water Level</h2>
+              <apexchart
+                type="area"
+                height="350"
+                :options="chartOptionsWaterHis"
+                :series="seriesWaterHis"
+              />
+            </div>
+          </el-card>
+        </div>
+        <div v-else-if="this.selectedMenu === '1-3'">
+          <div
+            style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
+            :class="ifCollapse"
+          >
+            <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga Suggestion</h2>
+          </div>
+            <el-alert
+              title="Warning"
+              type="warning"
+              description="You seem to be using more water than last month."
+              center
+              style="margin: 30px auto; box-shadow: 0 2px 12px 0 rgba(0,0,0,.1); max-width: 70vw;"
+            >
+            </el-alert>
+        </div>
+        <div v-else>
+          <MdConstructIcon w="600px" h="600px" animate="rotate" style="margin: 150px auto;" />
+          <h1 style="font-size: 30px;">Under Construction</h1>
         </div>
       </el-main>
     </el-container>
@@ -599,7 +619,39 @@ export default {
       seriesTempHis: [
         {
           name: 'Temperature',
-          data: ['24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '23'],
+          data: [
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '23',
+          ],
         },
       ],
       chartOptionsTempHis: {
@@ -654,7 +706,39 @@ export default {
           },
         },
         xaxis: {
-          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          categories: [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17',
+            '18',
+            '19',
+            '20',
+            '21',
+            '22',
+            '23',
+            '24',
+            '25',
+            '26',
+            '27',
+            '28',
+            '29',
+            '30',
+            '31',
+          ],
           title: {
             text: 'August',
           },
@@ -671,7 +755,39 @@ export default {
       seriesHumidityHis: [
         {
           name: 'Humidity',
-          data: ['76', '75', '73', '78', '75', '74', '73', '70', '69', '72', '72', '74', '76', '75', '73', '78', '75', '74', '73', '70', '69', '72', '72', '74', '74', '73', '70', '69', '72', '72', '74'],
+          data: [
+            '76',
+            '75',
+            '73',
+            '78',
+            '75',
+            '74',
+            '73',
+            '70',
+            '69',
+            '72',
+            '72',
+            '74',
+            '76',
+            '75',
+            '73',
+            '78',
+            '75',
+            '74',
+            '73',
+            '70',
+            '69',
+            '72',
+            '72',
+            '74',
+            '74',
+            '73',
+            '70',
+            '69',
+            '72',
+            '72',
+            '74',
+          ],
         },
       ],
       chartOptionsHumidityHis: {
@@ -726,7 +842,39 @@ export default {
           },
         },
         xaxis: {
-          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          categories: [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17',
+            '18',
+            '19',
+            '20',
+            '21',
+            '22',
+            '23',
+            '24',
+            '25',
+            '26',
+            '27',
+            '28',
+            '29',
+            '30',
+            '31',
+          ],
           title: {
             text: 'August',
           },
@@ -743,7 +891,39 @@ export default {
       seriesSunlightHis: [
         {
           name: 'Sunlight',
-          data: ['240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '230'],
+          data: [
+            '240',
+            '250',
+            '230',
+            '260',
+            '250',
+            '240',
+            '250',
+            '230',
+            '260',
+            '250',
+            '240',
+            '250',
+            '230',
+            '260',
+            '250',
+            '240',
+            '250',
+            '230',
+            '260',
+            '250',
+            '240',
+            '250',
+            '230',
+            '260',
+            '250',
+            '240',
+            '250',
+            '230',
+            '260',
+            '250',
+            '230',
+          ],
         },
       ],
       chartOptionsSunlightHis: {
@@ -798,7 +978,39 @@ export default {
           },
         },
         xaxis: {
-          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          categories: [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17',
+            '18',
+            '19',
+            '20',
+            '21',
+            '22',
+            '23',
+            '24',
+            '25',
+            '26',
+            '27',
+            '28',
+            '29',
+            '30',
+            '31',
+          ],
           title: {
             text: 'August',
           },
@@ -815,7 +1027,39 @@ export default {
       seriesWaterHis: [
         {
           name: 'Water Level',
-          data: ['24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '23'],
+          data: [
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '24',
+            '25',
+            '23',
+            '26',
+            '25',
+            '23',
+          ],
         },
       ],
       chartOptionsWaterHis: {
@@ -870,7 +1114,39 @@ export default {
           },
         },
         xaxis: {
-          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          categories: [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17',
+            '18',
+            '19',
+            '20',
+            '21',
+            '22',
+            '23',
+            '24',
+            '25',
+            '26',
+            '27',
+            '28',
+            '29',
+            '30',
+            '31',
+          ],
           title: {
             text: 'August',
           },
@@ -886,18 +1162,27 @@ export default {
       },
       seriesSoil: [70, 20, 5, 3, 1.1, 0.9],
       chartOptionSoil: {
-        labels: ['Calcium', 'Magnesium', 'Potassium', 'Boron', 'Cobalt', 'Iron'],
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              position: 'bottom',
+        labels: [
+          'Calcium',
+          'Magnesium',
+          'Potassium',
+          'Boron',
+          'Cobalt',
+          'Iron',
+        ],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+              legend: {
+                position: 'bottom',
+              },
             },
           },
-        }],
+        ],
       },
     };
   },
