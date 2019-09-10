@@ -22,8 +22,7 @@
             style="text-align: left; border-right: none;"
             default-active="1-1"
             active-text-color="#0FBA2B"
-            @open="handleOpen"
-            @close="handleClose"
+            @select="handleSelect"
             :collapse="isMainMenuCollapse"
           >
             <el-submenu index="1">
@@ -34,7 +33,7 @@
               <el-menu-item class="farmSubtitle" index="1-1">
                 <i class="el-icon-coordinate"></i>Fields
               </el-menu-item>
-              <el-menu-item class="farmSubtitle" index="1-2" disabled>
+              <el-menu-item class="farmSubtitle" index="1-2">
                 <i class="el-icon-date"></i>Cycles
               </el-menu-item>
               <el-menu-item class="farmSubtitle" index="1-3" disabled>
@@ -56,7 +55,7 @@
         <el-button icon="el-icon-caret-left" circle @click="collapseMainMenu" v-else></el-button>
       </el-aside>
       <el-main style="padding: 0px;">
-        <el-container style="height: 100%;">
+        <el-container style="height: 100%;" v-if="this.selectedMenu === '1-1'">
           <el-aside
             style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
             :width="subMenuAsideWidth"
@@ -89,6 +88,7 @@
                 style="text-align: left; border-right: none; margin-top: 15px;"
                 default-active="1"
                 active-text-color="#0FBA2B"
+                @select="handleSelectSub"
                 :collapse="isSubMenuCollapse"
               >
                 <el-menu-item class="farmSubmenuItem" index="1">
@@ -99,7 +99,7 @@
                   <i class="el-icon-lightning"></i>
                   <span v-if="!isSubMenuCollapse">Weather</span>
                 </el-menu-item>
-                <el-menu-item class="farmSubmenuItem" index="3" disabled>
+                <el-menu-item class="farmSubmenuItem" index="3">
                   <i class="el-icon-data-line"></i>
                   <span v-if="!isSubMenuCollapse">Soil Analysis</span>
                 </el-menu-item>
@@ -119,7 +119,7 @@
               style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
               :class="ifCollapse"
             >
-              <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga</h2>
+              <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga Real Time</h2>
             </div>
             <el-card class="box-card" style="margin: 20px;">
               <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
@@ -167,6 +167,58 @@
             </el-card>
           </el-main>
         </el-container>
+        <div v-else>
+          <div
+              style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
+              :class="ifCollapse"
+            >
+              <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga Historical Data</h2>
+            </div>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Temperature</h2>
+                <apexchart
+                  type="area"
+                  height="350"
+                  :options="chartOptionsTempHis"
+                  :series="seriesTempHis"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Humidity</h2>
+                <apexchart
+                  type="area"
+                  height="350"
+                  :options="chartOptionsHumidityHis"
+                  :series="seriesHumidityHis"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Sunlight</h2>
+                <apexchart
+                  type="area"
+                  height="350"
+                  :options="chartOptionsSunlightHis"
+                  :series="seriesSunlightHis"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Water Level</h2>
+                <apexchart
+                  type="area"
+                  height="350"
+                  :options="chartOptionsWaterHis"
+                  :series="seriesWaterHis"
+                />
+              </div>
+            </el-card>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -175,13 +227,13 @@
 <script>
 // @ is an alias to /src
 const AWS = require('aws-sdk');
+const config = require('@/config.json');
 
 AWS.config.update({
-  accessKeyId: 'ASIAURONLV4VWVKLYSO7',
-  secretAccessKey: '1VzU7/6XHi8V0VYCrKkOcrWOAiMaZdM69kZ3mMgb',
-  sessionToken:
-    'FQoGZXIvYXdzEBgaDC8AgkgdrZINHU0ZwCKHAq30DTkilmGjAD+WDdSaCfaTMPF6ROIf4Jd1CqUjwlPFNFID27TaEeXCIvyq3ey53DoOrNdr9UBqnT6LrIQOkFQNpdiAtC20ijRlb7C8nGS59eV7rQVcyyaWOQBmBYShAlBkrkjOTr7WPjExgmCDeSiUFAanIeQWbOq6FQjni8m6DoqftGNRQ2UX9H7pqwv2qCtPd2+o1uwjcHY4x4cvMGDIFOKqHB6clxf5HM5I8zmeKiEd8HtPz33RdN/ZxsKeBJGv9UEiouIUDNpYp6tkpg9INmVtSigquBrTrr29jD0P3+6vmTQyQQh7hhpdrZfRaRCTKFKwHDq2vBOe3WyaYhOhE+FmxWhHKP7z3usF',
-  region: 'us-east-1',
+  accessKeyId: config.accessKeyId,
+  secretAccessKey: config.secretAccessKey,
+  sessionToken: config.sessionToken,
+  region: config.region,
 });
 const sqs = new AWS.SQS();
 
@@ -200,6 +252,8 @@ export default {
     return {
       isMainMenuCollapse: true,
       isSubMenuCollapse: true,
+      selectedMenu: '1-1',
+      subSelectedMenu: '1',
       seriesTemp: [
         {
           name: 'Temperature',
@@ -480,14 +534,302 @@ export default {
           },
         },
       },
+      seriesTempHis: [
+        {
+          name: 'Temperature',
+          data: ['24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '23'],
+        },
+      ],
+      chartOptionsTempHis: {
+        chart: {
+          stacked: false,
+          zoom: {
+            type: 'x',
+            enabled: true,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
+          },
+        },
+        plotOptions: {
+          line: {
+            curve: 'smooth',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        // colors: ['#0165fc'],
+        title: {
+          text: '',
+          align: 'left',
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
+          },
+        },
+        yaxis: {
+          min: 0,
+          max: 40,
+          labels: {
+            formatter(val) {
+              return `${val}°C`;
+            },
+          },
+          title: {
+            text: 'Temp °C',
+          },
+        },
+        xaxis: {
+          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          title: {
+            text: 'August',
+          },
+        },
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}°C`;
+            },
+          },
+        },
+      },
+      seriesHumidityHis: [
+        {
+          name: 'Humidity',
+          data: ['76', '75', '73', '78', '75', '74', '73', '70', '69', '72', '72', '74', '76', '75', '73', '78', '75', '74', '73', '70', '69', '72', '72', '74', '74', '73', '70', '69', '72', '72', '74'],
+        },
+      ],
+      chartOptionsHumidityHis: {
+        chart: {
+          stacked: false,
+          zoom: {
+            type: 'x',
+            enabled: true,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
+          },
+        },
+        plotOptions: {
+          line: {
+            curve: 'smooth',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        colors: ['#78ffd6'],
+        title: {
+          text: '',
+          align: 'left',
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
+          },
+        },
+        yaxis: {
+          min: 0,
+          max: 100,
+          labels: {
+            formatter(val) {
+              return `${val}%`;
+            },
+          },
+          title: {
+            text: 'Humidity %',
+          },
+        },
+        xaxis: {
+          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          title: {
+            text: 'August',
+          },
+        },
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}%`;
+            },
+          },
+        },
+      },
+      seriesSunlightHis: [
+        {
+          name: 'Sunlight',
+          data: ['240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '240', '250', '230', '260', '250', '230'],
+        },
+      ],
+      chartOptionsSunlightHis: {
+        chart: {
+          stacked: false,
+          zoom: {
+            type: 'x',
+            enabled: true,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
+          },
+        },
+        plotOptions: {
+          line: {
+            curve: 'smooth',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        colors: ['#f12711'],
+        title: {
+          text: '',
+          align: 'left',
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
+          },
+        },
+        yaxis: {
+          min: 0,
+          max: 300,
+          labels: {
+            formatter(val) {
+              return `${val}cd`;
+            },
+          },
+          title: {
+            text: 'Sunlight cd',
+          },
+        },
+        xaxis: {
+          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          title: {
+            text: 'August',
+          },
+        },
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}cd`;
+            },
+          },
+        },
+      },
+      seriesWaterHis: [
+        {
+          name: 'Water Level',
+          data: ['24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '24', '25', '23', '26', '25', '23'],
+        },
+      ],
+      chartOptionsWaterHis: {
+        chart: {
+          stacked: false,
+          zoom: {
+            type: 'x',
+            enabled: true,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
+          },
+        },
+        plotOptions: {
+          line: {
+            curve: 'smooth',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        colors: ['#00B4DB'],
+        title: {
+          text: '',
+          align: 'left',
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
+          },
+        },
+        yaxis: {
+          min: 0,
+          max: 50,
+          labels: {
+            formatter(val) {
+              return `${val}mm`;
+            },
+          },
+          title: {
+            text: 'Water Level mm',
+          },
+        },
+        xaxis: {
+          categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+          title: {
+            text: 'August',
+          },
+        },
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}mm`;
+            },
+          },
+        },
+      },
     };
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelect(key) {
+      this.selectedMenu = key;
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelectSub(key) {
+      this.subSelectedMenu = key;
     },
     expandMainMenu() {
       this.isMainMenuCollapse = false;
