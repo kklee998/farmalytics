@@ -22,13 +22,13 @@
             <el-menu-item class="farmSubtitle" index="1-1">
               <i class="el-icon-coordinate"></i>Fields
             </el-menu-item>
-            <el-menu-item class="farmSubtitle" index="1-2">
+            <el-menu-item class="farmSubtitle" index="1-2" disabled>
               <i class="el-icon-date"></i>Cycles
             </el-menu-item>
-            <el-menu-item class="farmSubtitle" index="1-3">
+            <el-menu-item class="farmSubtitle" index="1-3" disabled>
               <i class="el-icon-warning"></i>Alert
             </el-menu-item>
-            <el-menu-item class="farmSubtitle" index="1-4">
+            <el-menu-item class="farmSubtitle" index="1-4" disabled>
               <i class="el-icon-setting"></i>Admins
             </el-menu-item>
           </el-submenu>
@@ -36,7 +36,10 @@
       </el-aside>
       <el-main style="padding: 0px;">
         <el-container style="height: 100%;">
-          <el-aside style="border-right: solid 1px #e6e6e6; height: 100%;" width="280px">
+          <el-aside
+            style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
+            width="280px"
+          >
             <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;">
               <el-row type="flex" justify="center" style="height: 100%;" :gutter="20">
                 <el-col :span="5">
@@ -61,15 +64,61 @@
               <el-menu-item class="farmSubmenuItem" index="1">
                 <i class="el-icon-info"></i>General Information
               </el-menu-item>
-              <el-menu-item class="farmSubmenuItem" index="2">
+              <el-menu-item class="farmSubmenuItem" index="2" disabled>
                 <i class="el-icon-lightning"></i>Weather
               </el-menu-item>
-              <el-menu-item class="farmSubmenuItem" index="3">
+              <el-menu-item class="farmSubmenuItem" index="3" disabled>
                 <i class="el-icon-data-line"></i>Soil Analysis
               </el-menu-item>
             </el-menu>
           </el-aside>
-          <el-main></el-main>
+          <el-main style="padding: 0px;">
+            <div style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"></div>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Temperature</h2>
+                <apexchart
+                  type="bar"
+                  height="350"
+                  :options="chartOptionsTemp"
+                  :series="seriesTemp"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Humidity</h2>
+                <apexchart
+                  type="bar"
+                  height="350"
+                  :options="chartOptionsHumidity"
+                  :series="seriesHumidity"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Sunlight</h2>
+                <apexchart
+                  type="bar"
+                  height="350"
+                  :options="chartOptionsSunlight"
+                  :series="seriesSunlight"
+                />
+              </div>
+            </el-card>
+            <el-card class="box-card" style="margin: 20px;">
+              <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
+                <h2 style="float: left;">Water Level</h2>
+                <apexchart
+                  type="bar"
+                  height="350"
+                  :options="chartOptionsWater"
+                  :series="seriesWater"
+                />
+              </div>
+            </el-card>
+          </el-main>
         </el-container>
       </el-main>
     </el-container>
@@ -81,6 +130,470 @@
 
 export default {
   name: 'home',
+  data() {
+    return {
+      seriesTemp: [
+        {
+          name: 'Temperature',
+          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+        },
+      ],
+      chartOptionsTemp: {
+        chart: {
+          height: 350,
+          type: 'bar',
+        },
+        theme: {
+          monochrome: {
+            enabled: true,
+            color: '#255aee',
+            shadeTo: 'light',
+            shadeIntensity: 0.65,
+          },
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          formatter(val) {
+            return `${val}°C`;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ['#304758'],
+          },
+        },
+        xaxis: {
+          categories: [
+            'Jan 19',
+            'Feb 19',
+            'Mar 19',
+            'Apr 19',
+            'May 19',
+            'Jun 19',
+            'Jul 19',
+            'Aug 19',
+            'Sep 19',
+            'Oct 19',
+            'Nov 19',
+            'Dec 19',
+          ],
+          position: 'top',
+          labels: {
+            offsetY: -18,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#D8E3F0',
+                colorTo: '#BED1E6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            offsetY: -35,
+          },
+        },
+        fill: {
+          gradient: {
+            shade: 'light',
+            type: 'horizontal',
+            shadeIntensity: 0.25,
+            gradientToColors: undefined,
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [50, 0, 100, 100],
+          },
+        },
+        yaxis: {
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter(val) {
+              return `${val}°C`;
+            },
+          },
+        },
+        title: {
+          text: 'Monthly Temperature in Taman Bunga, 2019',
+          floating: true,
+          offsetY: 320,
+          align: 'center',
+          style: {
+            color: '#444',
+          },
+        },
+      },
+      seriesHumidity: [
+        {
+          name: 'Humidity',
+          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+        },
+      ],
+      chartOptionsHumidity: {
+        chart: {
+          height: 350,
+          type: 'bar',
+        },
+        theme: {
+          monochrome: {
+            enabled: true,
+            color: '#78ffd6',
+            shadeTo: 'light',
+            shadeIntensity: 0.65,
+          },
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          formatter(val) {
+            return `${val}%`;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ['#304758'],
+          },
+        },
+        xaxis: {
+          categories: [
+            'Jan 19',
+            'Feb 19',
+            'Mar 19',
+            'Apr 19',
+            'May 19',
+            'Jun 19',
+            'Jul 19',
+            'Aug 19',
+            'Sep 19',
+            'Oct 19',
+            'Nov 19',
+            'Dec 19',
+          ],
+          position: 'top',
+          labels: {
+            offsetY: -18,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#a8ff78',
+                colorTo: '#78ffd6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            offsetY: -35,
+          },
+        },
+        fill: {
+          gradient: {
+            shade: 'light',
+            type: 'horizontal',
+            shadeIntensity: 0.25,
+            gradientToColors: undefined,
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [50, 0, 100, 100],
+          },
+        },
+        yaxis: {
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter(val) {
+              return `${val}%`;
+            },
+          },
+        },
+        title: {
+          text: 'Monthly Humidity in Taman Bunga, 2019',
+          floating: true,
+          offsetY: 320,
+          align: 'center',
+          style: {
+            color: '#444',
+          },
+        },
+      },
+      seriesSunlight: [
+        {
+          name: 'Sunlight Candela',
+          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+        },
+      ],
+      chartOptionsSunlight: {
+        chart: {
+          height: 350,
+          type: 'bar',
+        },
+        theme: {
+          monochrome: {
+            enabled: true,
+            color: '#f12711',
+            shadeTo: 'light',
+            shadeIntensity: 0.65,
+          },
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          formatter(val) {
+            return `${val}cd`;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ['#304758'],
+          },
+        },
+        xaxis: {
+          categories: [
+            'Jan 19',
+            'Feb 19',
+            'Mar 19',
+            'Apr 19',
+            'May 19',
+            'Jun 19',
+            'Jul 19',
+            'Aug 19',
+            'Sep 19',
+            'Oct 19',
+            'Nov 19',
+            'Dec 19',
+          ],
+          position: 'top',
+          labels: {
+            offsetY: -18,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#f12711',
+                colorTo: '#f5af19',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            offsetY: -35,
+          },
+        },
+        fill: {
+          gradient: {
+            shade: 'light',
+            type: 'horizontal',
+            shadeIntensity: 0.25,
+            gradientToColors: undefined,
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [50, 0, 100, 100],
+          },
+        },
+        yaxis: {
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter(val) {
+              return `${val}cd`;
+            },
+          },
+        },
+        title: {
+          text: 'Monthly Sunlight Candela in Taman Bunga, 2019',
+          floating: true,
+          offsetY: 320,
+          align: 'center',
+          style: {
+            color: '#444',
+          },
+        },
+      },
+      seriesWater: [
+        {
+          name: 'Water Level',
+          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+        },
+      ],
+      chartOptionsWater: {
+        chart: {
+          height: 350,
+          type: 'bar',
+        },
+        theme: {
+          monochrome: {
+            enabled: true,
+            color: '#00B4DB',
+            shadeTo: 'light',
+            shadeIntensity: 0.65,
+          },
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          formatter(val) {
+            return `${val}m`;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ['#304758'],
+          },
+        },
+        xaxis: {
+          categories: [
+            'Jan 19',
+            'Feb 19',
+            'Mar 19',
+            'Apr 19',
+            'May 19',
+            'Jun 19',
+            'Jul 19',
+            'Aug 19',
+            'Sep 19',
+            'Oct 19',
+            'Nov 19',
+            'Dec 19',
+          ],
+          position: 'top',
+          labels: {
+            offsetY: -18,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#00B4DB',
+                colorTo: '#0083B0',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            offsetY: -35,
+          },
+        },
+        fill: {
+          gradient: {
+            shade: 'light',
+            type: 'horizontal',
+            shadeIntensity: 0.25,
+            gradientToColors: undefined,
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [50, 0, 100, 100],
+          },
+        },
+        yaxis: {
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter(val) {
+              return `${val}m`;
+            },
+          },
+        },
+        title: {
+          text: 'Monthly Water Level in Taman Bunga, 2019',
+          floating: true,
+          offsetY: 320,
+          align: 'center',
+          style: {
+            color: '#444',
+          },
+        },
+      },
+    };
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
