@@ -9,7 +9,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 Vue.use(VueApexCharts);
-
 Vue.component('apexchart', VueApexCharts);
 
 Vue.config.productionTip = false;

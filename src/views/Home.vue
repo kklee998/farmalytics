@@ -14,7 +14,7 @@
           <img src="@/assets/AWS Logo-01-01.png" style="max-width: 100%; max-height: 100%;" />
         </div>
         <div style="width: 64px; height: 64px; border-bottom: solid 1px #e6e6e6;" v-else>
-          <img src="@/assets/AWS Logo SM.png" style="max-width: 100%; max-height: 100%;" />
+          <img src="@/assets/AWS Logo SM v2.png" style="max-width: 100%; max-height: 100%;" />
         </div>
         <el-collapse-transition>
         <el-menu
@@ -80,8 +80,8 @@
             </div>
             <div style="width: 64px; height: 64px; border-bottom: solid 1px #e6e6e6;" v-else>
               <img
-                src="@/assets/Vector 2.png"
-                style="max-width: 100%; max-height: 100%; padding: 15px 8px;"
+                src="@/assets/Vector 2 v2.png"
+                style="max-width: 100%; max-height: 100%;"
               />
             </div>
             <el-collapse-transition>
@@ -171,6 +171,7 @@
 
 <script>
 // @ is an alias to /src
+const AWS = require('aws-sdk');
 
 export default {
   name: 'home',
@@ -230,6 +231,7 @@ export default {
             'Nov 19',
             'Dec 19',
           ],
+          // type: "datetime",
           position: 'top',
           labels: {
             offsetY: -18,
@@ -679,6 +681,30 @@ export default {
       }
       return 'expandDiv';
     },
+  },
+  mounted() {
+    console.log(AWS);
+    AWS.config.update({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      sessionToken: process.env.AWS_SESSION_TOKEN,
+      region: process.env.AWS_REGION,
+    });
+    const sqs = new AWS.SQS();
+
+    const params = {
+      QueueUrl: 'STRING_VALUE', /* required */
+      AttributeNames: [
+        'All',
+      ],
+      MaxNumberOfMessages: '10',
+      VisibilityTimeout: '0',
+      WaitTimeSeconds: '0',
+    };
+    sqs.receiveMessage(params, (err, data) => {
+      if (err) console.log(err, err.stack); // an error occurred
+      else console.log(data); // successful response
+    });
   },
 };
 </script>
