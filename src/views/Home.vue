@@ -8,7 +8,8 @@
         style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
         :width="mainMenuAsideWidth"
       >
-        <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;"
+        <div
+          style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;"
           v-if="!isMainMenuCollapse"
         >
           <img src="@/assets/AWS Logo-01-01.png" style="max-width: 100%; max-height: 100%;" />
@@ -17,39 +18,41 @@
           <img src="@/assets/AWS Logo SM v2.png" style="max-width: 100%; max-height: 100%;" />
         </div>
         <el-collapse-transition>
-        <el-menu
-          style="text-align: left; border-right: none;"
-          default-active="1-1"
-          active-text-color="#0FBA2B"
-          @open="handleOpen"
-          @close="handleClose"
-          :collapse="isMainMenuCollapse"
-        >
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-house"></i>
-              <span class="farmTitle">Wheat Farm</span>
-            </template>
-            <el-menu-item class="farmSubtitle" index="1-1">
-              <i class="el-icon-coordinate"></i>Fields
-            </el-menu-item>
-            <el-menu-item class="farmSubtitle" index="1-2" disabled>
-              <i class="el-icon-date"></i>Cycles
-            </el-menu-item>
-            <el-menu-item class="farmSubtitle" index="1-3" disabled>
-              <i class="el-icon-warning"></i>Alert
-            </el-menu-item>
-            <el-menu-item class="farmSubtitle" index="1-4" disabled>
-              <i class="el-icon-setting"></i>Admins
-            </el-menu-item>
-          </el-submenu>
-        </el-menu>
+          <el-menu
+            style="text-align: left; border-right: none;"
+            default-active="1-1"
+            active-text-color="#0FBA2B"
+            @open="handleOpen"
+            @close="handleClose"
+            :collapse="isMainMenuCollapse"
+          >
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-house"></i>
+                <span class="farmTitle">Wheat Farm</span>
+              </template>
+              <el-menu-item class="farmSubtitle" index="1-1">
+                <i class="el-icon-coordinate"></i>Fields
+              </el-menu-item>
+              <el-menu-item class="farmSubtitle" index="1-2" disabled>
+                <i class="el-icon-date"></i>Cycles
+              </el-menu-item>
+              <el-menu-item class="farmSubtitle" index="1-3" disabled>
+                <i class="el-icon-warning"></i>Alert
+              </el-menu-item>
+              <el-menu-item class="farmSubtitle" index="1-4" disabled>
+                <i class="el-icon-setting"></i>Admins
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
         </el-collapse-transition>
-        <br/>
-        <el-button icon="el-icon-caret-right" circle @click="expandMainMenu"
+        <br />
+        <el-button
+          icon="el-icon-caret-right"
+          circle
+          @click="expandMainMenu"
           v-if="isMainMenuCollapse"
-        >
-        </el-button>
+        ></el-button>
         <el-button icon="el-icon-caret-left" circle @click="collapseMainMenu" v-else></el-button>
       </el-aside>
       <el-main style="padding: 0px;">
@@ -79,37 +82,36 @@
               </el-row>
             </div>
             <div style="width: 64px; height: 64px; border-bottom: solid 1px #e6e6e6;" v-else>
-              <img
-                src="@/assets/Vector 2 v2.png"
-                style="max-width: 100%; max-height: 100%;"
-              />
+              <img src="@/assets/Vector 2 v2.png" style="max-width: 100%; max-height: 100%;" />
             </div>
             <el-collapse-transition>
-            <el-menu
-              style="text-align: left; border-right: none; margin-top: 15px;"
-              default-active="1"
-              active-text-color="#0FBA2B"
-              :collapse=isSubMenuCollapse
-            >
-              <el-menu-item class="farmSubmenuItem" index="1">
-                <i class="el-icon-info"></i>
-                <span v-if="!isSubMenuCollapse">General Information</span>
-              </el-menu-item>
-              <el-menu-item class="farmSubmenuItem" index="2" disabled>
-                <i class="el-icon-lightning"></i>
-                <span v-if="!isSubMenuCollapse">Weather</span>
-              </el-menu-item>
-              <el-menu-item class="farmSubmenuItem" index="3" disabled>
-                <i class="el-icon-data-line"></i>
-                <span v-if="!isSubMenuCollapse">Soil Analysis</span>
-              </el-menu-item>
-            </el-menu>
+              <el-menu
+                style="text-align: left; border-right: none; margin-top: 15px;"
+                default-active="1"
+                active-text-color="#0FBA2B"
+                :collapse="isSubMenuCollapse"
+              >
+                <el-menu-item class="farmSubmenuItem" index="1">
+                  <i class="el-icon-info"></i>
+                  <span v-if="!isSubMenuCollapse">General Information</span>
+                </el-menu-item>
+                <el-menu-item class="farmSubmenuItem" index="2" disabled>
+                  <i class="el-icon-lightning"></i>
+                  <span v-if="!isSubMenuCollapse">Weather</span>
+                </el-menu-item>
+                <el-menu-item class="farmSubmenuItem" index="3" disabled>
+                  <i class="el-icon-data-line"></i>
+                  <span v-if="!isSubMenuCollapse">Soil Analysis</span>
+                </el-menu-item>
+              </el-menu>
             </el-collapse-transition>
-            <br/>
-            <el-button icon="el-icon-caret-right" circle @click="expandSubMenu"
+            <br />
+            <el-button
+              icon="el-icon-caret-right"
+              circle
+              @click="expandSubMenu"
               v-if="isSubMenuCollapse"
-            >
-            </el-button>
+            ></el-button>
             <el-button icon="el-icon-caret-left" circle @click="collapseSubMenu" v-else></el-button>
           </el-aside>
           <el-main style="padding: 0px;">
@@ -117,12 +119,13 @@
               style="width: 100%; height: 107px; border-bottom: solid 1px #e6e6e6;"
               :class="ifCollapse"
             >
+              <h2 style="margin: 0px; padding-top: 10px;">Taman Bunga</h2>
             </div>
             <el-card class="box-card" style="margin: 20px;">
               <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
                 <h2 style="float: left;">Temperature</h2>
                 <apexchart
-                  type="bar"
+                  type="area"
                   height="350"
                   :options="chartOptionsTemp"
                   :series="seriesTemp"
@@ -133,7 +136,7 @@
               <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
                 <h2 style="float: left;">Humidity</h2>
                 <apexchart
-                  type="bar"
+                  type="area"
                   height="350"
                   :options="chartOptionsHumidity"
                   :series="seriesHumidity"
@@ -144,7 +147,7 @@
               <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
                 <h2 style="float: left;">Sunlight</h2>
                 <apexchart
-                  type="bar"
+                  type="area"
                   height="350"
                   :options="chartOptionsSunlight"
                   :series="seriesSunlight"
@@ -155,7 +158,7 @@
               <div style="max-width: 1000px; margin: 0px auto; min-height: 420px">
                 <h2 style="float: left;">Water Level</h2>
                 <apexchart
-                  type="bar"
+                  type="area"
                   height="350"
                   :options="chartOptionsWater"
                   :series="seriesWater"
@@ -173,6 +176,24 @@
 // @ is an alias to /src
 const AWS = require('aws-sdk');
 
+AWS.config.update({
+  accessKeyId: 'ASIAURONLV4VWVKLYSO7',
+  secretAccessKey: '1VzU7/6XHi8V0VYCrKkOcrWOAiMaZdM69kZ3mMgb',
+  sessionToken:
+    'FQoGZXIvYXdzEBgaDC8AgkgdrZINHU0ZwCKHAq30DTkilmGjAD+WDdSaCfaTMPF6ROIf4Jd1CqUjwlPFNFID27TaEeXCIvyq3ey53DoOrNdr9UBqnT6LrIQOkFQNpdiAtC20ijRlb7C8nGS59eV7rQVcyyaWOQBmBYShAlBkrkjOTr7WPjExgmCDeSiUFAanIeQWbOq6FQjni8m6DoqftGNRQ2UX9H7pqwv2qCtPd2+o1uwjcHY4x4cvMGDIFOKqHB6clxf5HM5I8zmeKiEd8HtPz33RdN/ZxsKeBJGv9UEiouIUDNpYp6tkpg9INmVtSigquBrTrr29jD0P3+6vmTQyQQh7hhpdrZfRaRCTKFKwHDq2vBOe3WyaYhOhE+FmxWhHKP7z3usF',
+  region: 'us-east-1',
+});
+const sqs = new AWS.SQS();
+
+const params = {
+  QueueUrl:
+    'https://sqs.us-east-1.amazonaws.com/312352681771/farmalytics_sqs' /* required */,
+  AttributeNames: ['All'],
+  MaxNumberOfMessages: '10',
+  VisibilityTimeout: '10',
+  WaitTimeSeconds: '0',
+};
+
 export default {
   name: 'home',
   data() {
@@ -182,461 +203,280 @@ export default {
       seriesTemp: [
         {
           name: 'Temperature',
-          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+          data: [],
         },
       ],
       chartOptionsTemp: {
         chart: {
-          height: 350,
-          type: 'bar',
-        },
-        theme: {
-          monochrome: {
+          stacked: false,
+          zoom: {
+            type: 'x',
             enabled: true,
-            color: '#255aee',
-            shadeTo: 'light',
-            shadeIntensity: 0.65,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
           },
         },
         plotOptions: {
-          bar: {
-            dataLabels: {
-              position: 'top', // top, center, bottom
-            },
+          line: {
+            curve: 'smooth',
           },
         },
         dataLabels: {
-          enabled: true,
-          formatter(val) {
-            return `${val}°C`;
-          },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ['#304758'],
-          },
+          enabled: false,
         },
-        xaxis: {
-          categories: [
-            'Jan 19',
-            'Feb 19',
-            'Mar 19',
-            'Apr 19',
-            'May 19',
-            'Jun 19',
-            'Jul 19',
-            'Aug 19',
-            'Sep 19',
-            'Oct 19',
-            'Nov 19',
-            'Dec 19',
-          ],
-          // type: "datetime",
-          position: 'top',
-          labels: {
-            offsetY: -18,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#D8E3F0',
-                colorTo: '#BED1E6',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              },
-            },
-          },
-          tooltip: {
-            enabled: true,
-            offsetY: -35,
-          },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        // colors: ['#0165fc'],
+        title: {
+          text: '',
+          align: 'left',
         },
         fill: {
+          type: 'gradient',
           gradient: {
-            shade: 'light',
-            type: 'horizontal',
-            shadeIntensity: 0.25,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [50, 0, 100, 100],
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
           },
         },
         yaxis: {
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
+          min: 0,
+          max: 40,
           labels: {
-            show: false,
             formatter(val) {
               return `${val}°C`;
             },
           },
+          title: {
+            text: 'Temp °C',
+          },
         },
-        title: {
-          text: 'Monthly Temperature in Taman Bunga, 2019',
-          floating: true,
-          offsetY: 320,
-          align: 'center',
-          style: {
-            color: '#444',
+        xaxis: {
+          type: 'datetime',
+        },
+
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}°C`;
+            },
           },
         },
       },
       seriesHumidity: [
         {
           name: 'Humidity',
-          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+          data: [],
         },
       ],
       chartOptionsHumidity: {
         chart: {
-          height: 350,
-          type: 'bar',
-        },
-        theme: {
-          monochrome: {
+          stacked: false,
+          zoom: {
+            type: 'x',
             enabled: true,
-            color: '#78ffd6',
-            shadeTo: 'light',
-            shadeIntensity: 0.65,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
           },
         },
         plotOptions: {
-          bar: {
-            dataLabels: {
-              position: 'top', // top, center, bottom
-            },
+          line: {
+            curve: 'smooth',
           },
         },
         dataLabels: {
-          enabled: true,
-          formatter(val) {
-            return `${val}%`;
-          },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ['#304758'],
-          },
+          enabled: false,
         },
-        xaxis: {
-          categories: [
-            'Jan 19',
-            'Feb 19',
-            'Mar 19',
-            'Apr 19',
-            'May 19',
-            'Jun 19',
-            'Jul 19',
-            'Aug 19',
-            'Sep 19',
-            'Oct 19',
-            'Nov 19',
-            'Dec 19',
-          ],
-          position: 'top',
-          labels: {
-            offsetY: -18,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#a8ff78',
-                colorTo: '#78ffd6',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              },
-            },
-          },
-          tooltip: {
-            enabled: true,
-            offsetY: -35,
-          },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        colors: ['#78ffd6'],
+        title: {
+          text: '',
+          align: 'left',
         },
         fill: {
+          type: 'gradient',
           gradient: {
-            shade: 'light',
-            type: 'horizontal',
-            shadeIntensity: 0.25,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [50, 0, 100, 100],
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
           },
         },
         yaxis: {
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
+          min: 0,
+          max: 100,
           labels: {
-            show: false,
+            formatter(val) {
+              return `${val}%`;
+            },
+          },
+          title: {
+            text: 'Humidity %',
+          },
+        },
+        xaxis: {
+          type: 'datetime',
+        },
+
+        tooltip: {
+          shared: false,
+          y: {
             formatter(val) {
               return `${val}%`;
             },
           },
         },
-        title: {
-          text: 'Monthly Humidity in Taman Bunga, 2019',
-          floating: true,
-          offsetY: 320,
-          align: 'center',
-          style: {
-            color: '#444',
-          },
-        },
       },
       seriesSunlight: [
         {
-          name: 'Sunlight Candela',
-          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+          name: 'Sunlight',
+          data: [],
         },
       ],
       chartOptionsSunlight: {
         chart: {
-          height: 350,
-          type: 'bar',
-        },
-        theme: {
-          monochrome: {
+          stacked: false,
+          zoom: {
+            type: 'x',
             enabled: true,
-            color: '#f12711',
-            shadeTo: 'light',
-            shadeIntensity: 0.65,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
           },
         },
         plotOptions: {
-          bar: {
-            dataLabels: {
-              position: 'top', // top, center, bottom
-            },
+          line: {
+            curve: 'smooth',
           },
         },
         dataLabels: {
-          enabled: true,
-          formatter(val) {
-            return `${val}cd`;
-          },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ['#304758'],
-          },
+          enabled: false,
         },
-        xaxis: {
-          categories: [
-            'Jan 19',
-            'Feb 19',
-            'Mar 19',
-            'Apr 19',
-            'May 19',
-            'Jun 19',
-            'Jul 19',
-            'Aug 19',
-            'Sep 19',
-            'Oct 19',
-            'Nov 19',
-            'Dec 19',
-          ],
-          position: 'top',
-          labels: {
-            offsetY: -18,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#f12711',
-                colorTo: '#f5af19',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              },
-            },
-          },
-          tooltip: {
-            enabled: true,
-            offsetY: -35,
-          },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        colors: ['#f12711'],
+        title: {
+          text: '',
+          align: 'left',
         },
         fill: {
+          type: 'gradient',
           gradient: {
-            shade: 'light',
-            type: 'horizontal',
-            shadeIntensity: 0.25,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [50, 0, 100, 100],
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
           },
         },
         yaxis: {
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
+          min: 100,
+          max: 400,
           labels: {
-            show: false,
             formatter(val) {
               return `${val}cd`;
             },
           },
+          title: {
+            text: 'Sunlight cd',
+          },
         },
-        title: {
-          text: 'Monthly Sunlight Candela in Taman Bunga, 2019',
-          floating: true,
-          offsetY: 320,
-          align: 'center',
-          style: {
-            color: '#444',
+        xaxis: {
+          type: 'datetime',
+        },
+
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}cd`;
+            },
           },
         },
       },
       seriesWater: [
         {
           name: 'Water Level',
-          data: [30, 40, 25, 30, 40, 36, 32, 23, 24, 38, 25, 42],
+          data: [],
         },
       ],
       chartOptionsWater: {
         chart: {
-          height: 350,
-          type: 'bar',
-        },
-        theme: {
-          monochrome: {
+          stacked: false,
+          zoom: {
+            type: 'x',
             enabled: true,
-            color: '#00B4DB',
-            shadeTo: 'light',
-            shadeIntensity: 0.65,
+          },
+          toolbar: {
+            autoSelected: 'zoom',
           },
         },
         plotOptions: {
-          bar: {
-            dataLabels: {
-              position: 'top', // top, center, bottom
-            },
+          line: {
+            curve: 'smooth',
           },
         },
         dataLabels: {
-          enabled: true,
-          formatter(val) {
-            return `${val}m`;
-          },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ['#304758'],
-          },
+          enabled: false,
         },
-        xaxis: {
-          categories: [
-            'Jan 19',
-            'Feb 19',
-            'Mar 19',
-            'Apr 19',
-            'May 19',
-            'Jun 19',
-            'Jul 19',
-            'Aug 19',
-            'Sep 19',
-            'Oct 19',
-            'Nov 19',
-            'Dec 19',
-          ],
-          position: 'top',
-          labels: {
-            offsetY: -18,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#00B4DB',
-                colorTo: '#0083B0',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              },
-            },
-          },
-          tooltip: {
-            enabled: true,
-            offsetY: -35,
-          },
+
+        markers: {
+          size: 0,
+          style: 'full',
+        },
+        colors: ['#00B4DB'],
+        title: {
+          text: '',
+          align: 'left',
         },
         fill: {
+          type: 'gradient',
           gradient: {
-            shade: 'light',
-            type: 'horizontal',
-            shadeIntensity: 0.25,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [50, 0, 100, 100],
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100],
           },
         },
         yaxis: {
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
+          min: 0,
+          max: 40,
           labels: {
-            show: false,
             formatter(val) {
-              return `${val}m`;
+              return `${val}mm`;
             },
           },
+          title: {
+            text: 'Water Level mm',
+          },
         },
-        title: {
-          text: 'Monthly Water Level in Taman Bunga, 2019',
-          floating: true,
-          offsetY: 320,
-          align: 'center',
-          style: {
-            color: '#444',
+        xaxis: {
+          type: 'datetime',
+        },
+
+        tooltip: {
+          shared: false,
+          y: {
+            formatter(val) {
+              return `${val}mm`;
+            },
           },
         },
       },
@@ -661,6 +501,64 @@ export default {
     collapseSubMenu() {
       this.isSubMenuCollapse = true;
     },
+    getData() {
+      sqs.receiveMessage(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+        // an error occurred
+        else {
+          const newDataTemp = this.seriesTemp[0].data;
+          const newDataHumidity = this.seriesHumidity[0].data;
+          const newDataSunlight = this.seriesSunlight[0].data;
+          const newDataWater = this.seriesWater[0].data;
+          data.Messages.forEach((item) => {
+            newDataTemp.push([
+              JSON.parse(item.Body).data[1].timestamp,
+              JSON.parse(item.Body).data[1].value,
+            ]);
+            newDataHumidity.push([
+              JSON.parse(item.Body).data[2].timestamp,
+              JSON.parse(item.Body).data[2].value,
+            ]);
+            newDataSunlight.push([
+              JSON.parse(item.Body).data[3].timestamp,
+              JSON.parse(item.Body).data[3].value,
+            ]);
+            newDataWater.push([
+              JSON.parse(item.Body).data[4].timestamp,
+              JSON.parse(item.Body).data[4].value,
+            ]);
+          });
+          newDataTemp.sort((x, y) => x[0] - y[0]);
+          newDataHumidity.sort((x, y) => x[0] - y[0]);
+          newDataSunlight.sort((x, y) => x[0] - y[0]);
+          newDataWater.sort((x, y) => x[0] - y[0]);
+          this.seriesTemp = [
+            {
+              name: 'Temperature',
+              data: newDataTemp,
+            },
+          ];
+          this.seriesHumidity = [
+            {
+              name: 'Humidity',
+              data: newDataHumidity,
+            },
+          ];
+          this.seriesSunlight = [
+            {
+              name: 'Sunlight',
+              data: newDataSunlight,
+            },
+          ];
+          this.seriesWater = [
+            {
+              name: 'Water Level',
+              data: newDataWater,
+            },
+          ];
+        }
+      });
+    },
   },
   computed: {
     mainMenuAsideWidth() {
@@ -683,28 +581,10 @@ export default {
     },
   },
   mounted() {
-    console.log(AWS);
-    AWS.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      sessionToken: process.env.AWS_SESSION_TOKEN,
-      region: process.env.AWS_REGION,
-    });
-    const sqs = new AWS.SQS();
-
-    const params = {
-      QueueUrl: 'STRING_VALUE', /* required */
-      AttributeNames: [
-        'All',
-      ],
-      MaxNumberOfMessages: '10',
-      VisibilityTimeout: '0',
-      WaitTimeSeconds: '0',
-    };
-    sqs.receiveMessage(params, (err, data) => {
-      if (err) console.log(err, err.stack); // an error occurred
-      else console.log(data); // successful response
-    });
+    this.getData();
+    setInterval(() => {
+      this.getData();
+    }, 10000);
   },
 };
 </script>
@@ -768,15 +648,15 @@ export default {
 }
 
 .transition-box {
-    margin-bottom: 10px;
-    width: 200px;
-    height: 100px;
-    border-radius: 4px;
-    background-color: #409EFF;
-    text-align: center;
-    color: #fff;
-    padding: 40px 20px;
-    box-sizing: border-box;
-    margin-right: 20px;
-  }
+  margin-bottom: 10px;
+  width: 200px;
+  height: 100px;
+  border-radius: 4px;
+  background-color: #409eff;
+  text-align: center;
+  color: #fff;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  margin-right: 20px;
+}
 </style>
