@@ -4,9 +4,14 @@
     <p>COME BACK LATER</p>
     <img src='@/assets/reee.gif'>-->
     <el-container style="height: 100%;">
-      <el-aside style="border-right: solid 1px #e6e6e6; height: 100%;" width="300px">
-        <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;">
+      <el-aside style="border-right: solid 1px #e6e6e6; height: 100%;" :width="mainMenuAsideWidth">
+        <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;"
+          v-if="!isMainMenuCollapse"
+        >
           <img src="@/assets/AWS Logo-01-01.png" style="max-width: 100%; max-height: 100%;" />
+        </div>
+        <div style="width: 64px; height: 64px; border-bottom: solid 1px #e6e6e6;" v-else>
+          <img src="@/assets/AWS Logo SM.png" style="max-width: 100%; max-height: 100%;" />
         </div>
         <el-menu
           style="text-align: left; border-right: none;"
@@ -14,9 +19,11 @@
           active-text-color="#0FBA2B"
           @open="handleOpen"
           @close="handleClose"
+          :collapse="isMainMenuCollapse"
         >
           <el-submenu index="1">
             <template slot="title">
+              <i class="el-icon-house"></i>
               <span class="farmTitle">Wheat Farm</span>
             </template>
             <el-menu-item class="farmSubtitle" index="1-1">
@@ -33,12 +40,19 @@
             </el-menu-item>
           </el-submenu>
         </el-menu>
+        <br/>
+        <el-button icon="el-icon-caret-right" circle @click="expandMainMenu"
+          v-if="isMainMenuCollapse"
+        >
+        </el-button>
+        <el-button icon="el-icon-caret-left" circle @click="collapseMainMenu" v-else></el-button>
       </el-aside>
       <el-main style="padding: 0px;">
         <el-container style="height: 100%;">
           <el-aside
             style="border-right: solid 1px #e6e6e6; height: 100%; overflow: hidden;"
             width="280px"
+            v-if="true"
           >
             <div style="width: 298px; height: 107px; border-bottom: solid 1px #e6e6e6;">
               <el-row type="flex" justify="center" style="height: 100%;" :gutter="20">
@@ -132,6 +146,7 @@ export default {
   name: 'home',
   data() {
     return {
+      isMainMenuCollapse: true,
       seriesTemp: [
         {
           name: 'Temperature',
@@ -600,6 +615,20 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    expandMainMenu() {
+      this.isMainMenuCollapse = false;
+    },
+    collapseMainMenu() {
+      this.isMainMenuCollapse = true;
+    },
+  },
+  computed: {
+    mainMenuAsideWidth() {
+      if (this.isMainMenuCollapse) {
+        return 60;
+      }
+      return 300;
     },
   },
 };
