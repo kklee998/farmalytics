@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "apexcharts": "^3.8.6",
-    "aws-sdk": "^2.525.0",
+    "aws-sdk": "^2.814.0",
     "core-js": "^2.6.5",
     "dotenv": "^8.1.0",
     "element-ui": "^2.12.0",
